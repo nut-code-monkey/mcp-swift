@@ -4,14 +4,38 @@
 import PackageDescription
 
 let package = Package(
-    name: "mcp-swift-hummingbird",
+    name: "mcp-swift",
+    platforms: [
+        .macOS(.v15)
+    ],
+    products: [
+        .library(name: "MCPServer", targets: ["MCPServer"]),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/modelcontextprotocol/swift-sdk.git", from: "0.12.1"),
+        .package(url: "https://github.com/apple/swift-nio.git", from: "2.99.0"),
+    ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .executableTarget(
-            name: "mcp-swift-hummingbird"
+        .target(
+            name: "MCPServer",
+            dependencies: [
+                .product(name: "MCP", package: "swift-sdk"),
+                .product(name: "NIOCore", package: "swift-nio"),
+                .product(name: "NIOPosix", package: "swift-nio"),
+                .product(name: "NIOHTTP1", package: "swift-nio"),
+            ]
         ),
-
+        
+        .executableTarget(
+            name: "Server",
+            dependencies: [
+                .product(name: "MCP", package: "swift-sdk"),
+                .target(name: "MCPServer"),
+//                .product(name: "NIOCore", package: "swift-nio"),
+//                .product(name: "NIOPosix", package: "swift-nio"),
+//                .product(name: "NIOHTTP1", package: "swift-nio"),
+            ]
+        ),
     ],
     swiftLanguageModes: [.v6]
 )

@@ -1,0 +1,20 @@
+{
+    "name": "Swift & Node.js Dev Environment",
+    "image": "swift:6.3.1", 
+    "features": {
+        "ghcr.io/devcontainers/features/node:2.0.0": {
+            "version": "20" 
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ssrobins.vscode-swift-format",
+                "swiftstack.swift-vscode",
+                "dbaeumer.vscode-eslint"
+            ]
+        }
+    },
+    "forwardPorts": [8080, 6274, 6277],
+    "onCreateCommand": "swift --version && node -v && npm -v"
+}
